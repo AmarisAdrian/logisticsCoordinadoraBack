@@ -1,0 +1,13 @@
+
+CREATE DATABASE IF NOT EXISTS coordinadoradb;
+USE coordinadoradb;
+
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  documento_identidad BIGINT NOT NULL,
+  nombre_completo VARCHAR(200) NOT NULL, 
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password TEXT NOT NULL, 
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+docker-compose.override.yml
+
+# Others
+dist/
+coverage/
