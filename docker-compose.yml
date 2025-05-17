@@ -6,8 +6,9 @@ services:
     ports:
       - "3000:3000" 
     volumes:
-      - .:/usr/src/app 
+      - ./src:/usr/src/app/src
       - /usr/src/app/node_modules 
+      - /usr/src/app/dist 
     depends_on:
       mysql:
         condition: service_healthy
