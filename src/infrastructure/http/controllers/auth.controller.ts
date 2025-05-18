@@ -36,7 +36,12 @@ export class AuthController {
         tipo: user.tipo
       });
 
-      res.json({ token, refreshToken });
+      res.json({ token, refreshToken, usuario: {
+        id: user.id_usuario,
+        email: user.email,
+        nombre: user.nombre,
+        tipo: user.tipo
+      } });
     } catch (error) {
       res.status(401).json({ error: error.message });
     }
