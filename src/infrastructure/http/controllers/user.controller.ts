@@ -6,14 +6,34 @@ import { UserUseCases } from '../../../application/use-cases/user.use-cases';
 export class UserController {
   constructor(private readonly userUseCases: UserUseCases) {}
 
-  async register(req: Request, res: Response): Promise<void> {
+  async register(req: Request, res: Response): Promise<Response> {
+    console.log("llega aqui");
     try {
+      console.log('Registering user:', req.body);
       const user = await this.userUseCases.createUser(req.body);
-      res.status(201).json(user);
+      
+      return res.status(201).json({
+        success: true,
+        data: {
+          id: user.id_usuario,
+          nombre: user.nombre,
+          email: user.email,
+          tipo: user.tipo,
+          estado: user.estado
+        }
+      });
+      
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      console.error('Error en register:', error);
+ 
+      return res.status(400).json({
+        success: false,
+        error: error.message || 'Error al registrar usuario*',
+        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      });
     }
   }
+
 
   async getProfile(req: Request, res: Response): Promise<void> {
     try {

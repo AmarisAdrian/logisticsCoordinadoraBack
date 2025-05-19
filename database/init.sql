@@ -13,6 +13,8 @@ CREATE TABLE usuario (
     INDEX idx_usuario_tipo (tipo)
 ) ENGINE=InnoDB;
 
+INSERT INTO coordinadoradb.usuario (nombre,email,password,tipo,fecha_registro,estado) VALUES
+	 ('admin','admin@admin.com','$2a$12$dHxuYh.sTHVpY5G8nswvN.W1kZJS8phwOp.gddlQT0G3utduxJp6e','administrador','2025-05-17 17:58:42','activo');
 
 CREATE TABLE vehiculo (
     id_vehiculo INT AUTO_INCREMENT PRIMARY KEY,
@@ -186,3 +188,7 @@ BEGIN
     SELECT LAST_INSERT_ID() AS id_reporte;
 END//
 DELIMITER ;
+
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+FLUSH PRIVILEGES;
+
