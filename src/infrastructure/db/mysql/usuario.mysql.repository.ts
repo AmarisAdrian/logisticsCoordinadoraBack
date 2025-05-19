@@ -1,6 +1,7 @@
 import { MySQLRepository } from './mysql.repository';
 import { UsuarioRepository } from '../../../core/ports/repositories/usuario.repository';
 import { Usuario } from '../../../core/entities/usuario.entity';
+import { console } from 'inspector';
 
 export class UsuarioMySQLRepository extends MySQLRepository implements UsuarioRepository {
 
@@ -31,9 +32,35 @@ export class UsuarioMySQLRepository extends MySQLRepository implements UsuarioRe
   }
 
   async create(usuario: Omit<Usuario, 'id_usuario'>): Promise<Usuario> {
-    const sql = 'INSERT INTO usuario SET ?';
-    const result = await this.execute(sql, [usuario]);
-    return { ...usuario, id_usuario: result.insertId };
+     try {
+       
+       if (!usuario || typeof usuario !== 'object') {
+         throw new Error('Datos de usuario inválidos: no es un objeto');
+        }
+        
+        const { nombre, email, password, tipo, estado, fecha_registro } = usuario;
+        
+        const sql = `
+            INSERT INTO usuario 
+            (nombre, email, password, tipo, estado, fecha_registro)
+            VALUES (?, ?, ?, ?, ?, NOW())
+        `;     
+
+        const result = await this.execute(sql, [
+            nombre,
+            email,
+            password,
+            tipo,
+            estado,
+        ]);        
+
+        return { 
+            ...usuario, 
+            id_usuario: result.insertId 
+        };
+    } catch (error: any) {  
+       throw new Error(`Error al crear usuario en la base de datos/*: ${error instanceof Error ? error.message : JSON.stringify(error)}`);
+    }
   }
 
   async update(id: number, usuario: Partial<Usuario>): Promise<Usuario> {

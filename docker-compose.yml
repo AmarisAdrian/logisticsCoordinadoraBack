@@ -33,9 +33,9 @@ services:
     command: 
       - --default-authentication-plugin=mysql_native_password
       - --skip-name-resolve
+      - --init-file=/docker-entrypoint-initdb.d/init.sql
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./database/auth-config.sql:/docker-entrypoint-initdb.d/auth-config.sql
       - mysql_data:/var/lib/mysql 
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
