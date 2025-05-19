@@ -36,7 +36,7 @@ export class AuthController {
         tipo: user.tipo
       });
 
-      res.json({ token, refreshToken, usuario: {
+      res.json({ accessToken: token, refreshToken, usuario: {
         id: user.id_usuario,
         email: user.email,
         nombre: user.nombre,

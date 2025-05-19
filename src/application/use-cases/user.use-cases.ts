@@ -26,11 +26,14 @@ export class UserUseCases {
       throw new Error('El email ya está registrado');
     }
     const hashedPassword = await this.authService.hashPassword(userData.password);
-    const newUser = await this.usuarioRepository.create({
+  
+      const newUserData: Omit<Usuario, 'id_usuario'> = {
       ...userData,
       password: hashedPassword,
-      estado: 'activo'
-    });
+      estado: userData.estado || 'activo',
+      fecha_registro: new Date()
+    };
+    const newUser = await this.usuarioRepository.create(newUserData);
     const { password, ...userWithoutPassword } = newUser;
     return userWithoutPassword as Usuario;
   }
