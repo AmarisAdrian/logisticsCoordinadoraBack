@@ -1,12 +1,15 @@
 
+export type UsuarioTipo = 'cliente' | 'administrador' | 'transportista';
+export type UsuarioEstado = 'activo' | 'inactivo';
+
 export interface Usuario {
   id_usuario?: number;
   nombre: string;
   email: string;
   password: string;
-  tipo: 'cliente' | 'administrador' | 'transportista';
+  tipo: UsuarioTipo;
   fecha_registro?: Date;
-  estado?: 'activo' | 'inactivo';
+  estado: UsuarioEstado;
   tokenVersion?: number;
 }
 
@@ -14,8 +17,8 @@ export interface UpdateUserDto {
   nombre?: string;
   email?: string;
   password?: string;
-  tipo?: 'cliente' | 'administrador' | 'transportista';
-  estado?: 'activo' | 'inactivo';
+  tipo?: UsuarioTipo;
+  estado?: UsuarioEstado;
 }
 
 export interface UserProfileResponse {
@@ -26,9 +29,13 @@ export interface UserProfileResponse {
   fecha_registro: Date;
 }
 
+
+
 export interface CreateUserDto {
   nombre: string;
   email: string;
   password: string;
-  tipo: 'cliente' | 'administrador' | 'transportista';
+  tipo: UsuarioTipo;
+  estado: UsuarioEstado;
+  fecha_registro?: Date;
 }
