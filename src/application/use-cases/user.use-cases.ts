@@ -12,7 +12,13 @@ export class UserUseCases {
   async getUserProfile(userId: number) {
     return this.usuarioRepository.findById(userId);
   }
+   async getUser(nombre: string) {
+    return this.usuarioRepository.findByName(nombre);
+  }
 
+  async getByTipo(nombre: string) {
+    return this.usuarioRepository.findByTipo(nombre);
+  }
   async updateUser(userId: number, updateData: UpdateUserDto) {
     return this.usuarioRepository.update(userId, updateData);
   }
