@@ -13,6 +13,18 @@ export class UsuarioMySQLRepository extends MySQLRepository implements UsuarioRe
     return this.query<Usuario[]>(sql);
   }
 
+  async findByTipo(tipo: string): Promise<Usuario[]> {   
+    const sql = 'SELECT * FROM usuario WHERE tipo = ?';
+    const usuarios = await this.query<Usuario[]>(sql, [tipo]);
+    return usuarios;
+  }
+
+ async findByName(nombre: string): Promise<Usuario| null> {
+    const sql = 'SELECT * FROM usuario WHERE nombre LIKE ?';
+    const [usuario] = await this.query<Usuario[]>(sql, [`%${nombre}%`]);
+    return usuario || null;
+  }
+
   async findByEmailWithPassword(email: string): Promise<(Usuario & { password: string }) | null> {
     const sql = 'SELECT * FROM usuario WHERE email = ?';
     const [usuario] = await this.query<(Usuario & { password: string })[]>(sql, [email]);

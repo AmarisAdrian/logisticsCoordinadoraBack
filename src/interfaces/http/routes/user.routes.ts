@@ -98,6 +98,7 @@ export function createUserRoutes(
  */
   router.post('/register', userController.register.bind(userController));
   router.get('/', authenticate, userController.listUsers.bind(userController));
-
+  router.get('/:id', authenticate, userController.getProfile.bind(userController));
+  router.get('/search/:tipo', authenticate, userController.getUserByTipo.bind(userController))
   return router;
 }

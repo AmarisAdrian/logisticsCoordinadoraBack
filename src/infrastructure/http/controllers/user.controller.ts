@@ -7,9 +7,7 @@ export class UserController {
   constructor(private readonly userUseCases: UserUseCases) {}
 
   async register(req: Request, res: Response): Promise<Response> {
-    console.log("llega aqui");
     try {
-      console.log('Registering user:', req.body);
       const user = await this.userUseCases.createUser(req.body);
       
       return res.status(201).json({
@@ -39,6 +37,24 @@ export class UserController {
     try {
       const userId = (req as any).user.id;
       const user = await this.userUseCases.getUserProfile(userId);
+      res.json(user);
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  }
+  async getUserByTipo(req: Request, res: Response): Promise<void> {
+    try {
+      const tipo = req.params.tipo; 
+      const user = await this.userUseCases.getByTipo(tipo);
+      res.json(user);
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  }
+   async getUser(req: Request, res: Response): Promise<void> {
+    try {
+      const nombre = (req as any).user.id;
+      const user = await this.userUseCases.getUser(nombre);
       res.json(user);
     } catch (error) {
       res.status(404).json({ error: error.message });
